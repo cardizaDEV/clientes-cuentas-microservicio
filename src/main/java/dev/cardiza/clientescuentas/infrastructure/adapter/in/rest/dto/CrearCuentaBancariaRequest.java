@@ -8,14 +8,14 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 
-@Schema(description = OpenApiDescriptions.CREAR_CUENTA_REQUEST)
-public record CrearCuentaRequest(
+@Schema(description = OpenApiDescriptions.CREAR_CUENTA_BANCARIA_REQUEST)
+public record CrearCuentaBancariaRequest(
 
         @Schema(description = OpenApiDescriptions.DNI_CLIENTE, example = OpenApiExamples.DNI)
         @NotBlank(message = ValidationMessages.DNI_CLIENTE_OBLIGATORIO)
         String dniCliente,
 
-        @Schema(description = OpenApiDescriptions.TIPO_CUENTA, example = OpenApiExamples.TIPO_CUENTA_NORMAL)
+        @Schema(description = OpenApiDescriptions.TIPO_CUENTA_BANCARIA, example = OpenApiExamples.TIPO_CUENTA_NORMAL)
         @NotBlank(message = ValidationMessages.TIPO_CUENTA_OBLIGATORIO)
         String tipoCuenta,
 

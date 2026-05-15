@@ -18,4 +18,6 @@ public final class OpenApiExamples {
     public static final String TOTAL_PREMIUM = "150000";
     public static final String TOTAL_NORMAL = "50000";
     public static final String TOTAL_ACTUALIZADO = "180000";
+
+    public static final String CANTIDAD = "1000";
 }

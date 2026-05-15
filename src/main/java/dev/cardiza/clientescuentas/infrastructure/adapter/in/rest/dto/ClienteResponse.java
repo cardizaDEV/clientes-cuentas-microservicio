@@ -25,7 +25,7 @@ public record ClienteResponse(
         @Schema(description = OpenApiDescriptions.FECHA_NACIMIENTO, example = OpenApiExamples.FECHA_NACIMIENTO)
         LocalDate fechaNacimiento,
 
-        @Schema(description = OpenApiDescriptions.CUENTAS)
-        List<CuentaResponse> cuentas
+        @Schema(description = OpenApiDescriptions.CUENTAS_BANCARIAS)
+        List<CuentaBancariaResponse> cuentas
 ) {
 }
