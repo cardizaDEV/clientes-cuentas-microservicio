@@ -1,12 +1,60 @@
 ## Ejecución del proyecto
 
-Ejecutar desde la raiz del proyecto `mvnw spring-boot:run`
+Ejecutar desde la raíz del proyecto:
 
-## Ejecución de los test
+```bash
+mvnw spring-boot:run
+```
+
+## Ejecución de los tests
+
+Ejecutar desde la raíz del proyecto:
+
+```bash
+mvnw test
+```
 
 ## Endpoints disponibles
 
+| Método | Ruta                                        | Descripción                                              |
+|--------|---------------------------------------------|----------------------------------------------------------|
+| GET    | `/clientes`                                 | Obtener todos los clientes con sus cuentas               |
+| GET    | `/clientes/mayores-de-edad`                 | Obtener clientes mayores de 18 años                      |
+| GET    | `/clientes/con-cuenta-superior-a/{cantidad}`| Obtener clientes cuya suma de cuentas supera la cantidad |
+| GET    | `/clientes/{dni}`                           | Obtener un cliente por DNI con sus cuentas               |
+| POST   | `/cuentas`                                  | Crear una nueva cuenta bancaria                          |
+| PUT    | `/cuentas/{idCuenta}`                       | Actualizar el saldo de una cuenta bancaria               |
+
+La documentación completa con ejemplos está disponible en Swagger:
+`http://localhost:8080/swagger-ui.html`
+
 ## Ejemplos de peticiones
+
+
+
+**POST /cuentas** — Crear cuenta para cliente (nuevo/existente):
+```json
+{
+  "dniCliente": "99999999Z",
+  "tipoCuenta": "PREMIUM",
+  "total": 10000
+}
+```
+
+```json
+{
+  "dniCliente": "11111111A",
+  "tipoCuenta": "PREMIUM",
+  "total": 10000
+}
+```
+
+**PUT /cuentas/1** — Actualizar saldo:
+```json
+{
+  "total": 180000
+}
+```
 
 ## Decisiones técnicas
 

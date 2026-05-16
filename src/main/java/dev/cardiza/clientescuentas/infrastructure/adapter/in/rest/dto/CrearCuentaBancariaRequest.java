@@ -6,7 +6,6 @@ import dev.cardiza.clientescuentas.infrastructure.adapter.in.rest.constants.Vali
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
 
 @Schema(description = OpenApiDescriptions.CREATE_CUENTA_REQUEST)
 public record CrearCuentaBancariaRequest(
@@ -21,7 +20,6 @@ public record CrearCuentaBancariaRequest(
 
         @Schema(description = OpenApiDescriptions.INITIAL_TOTAL, example = OpenApiExamples.TOTAL_NORMAL)
         @NotNull(message = ValidationMessages.TOTAL_REQUIRED)
-        @PositiveOrZero(message = ValidationMessages.TOTAL_NOT_NEGATIVE)
         Double total
 ) {
 }
