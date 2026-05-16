@@ -1,5 +1,10 @@
 package dev.cardiza.clientescuentas.infrastructure.adapter.in.rest.controller;
 
+import dev.cardiza.clientescuentas.application.exception.ClienteNotFoundException;
+import dev.cardiza.clientescuentas.domain.model.Cliente;
+import dev.cardiza.clientescuentas.domain.model.CuentaBancaria;
+import dev.cardiza.clientescuentas.domain.port.in.ClienteUseCase;
+import dev.cardiza.clientescuentas.domain.port.in.CuentaBancariaUseCase;
 import dev.cardiza.clientescuentas.infrastructure.adapter.in.rest.constants.ApiRoutes;
 import dev.cardiza.clientescuentas.infrastructure.adapter.in.rest.constants.HttpStatusCodes;
 import dev.cardiza.clientescuentas.infrastructure.adapter.in.rest.constants.OpenApiDescriptions;
@@ -9,7 +14,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.HttpStatus;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,58 +23,75 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static dev.cardiza.clientescuentas.infrastructure.adapter.in.rest.constants.ApiRoutes.PV_CANTIDAD;
-import static dev.cardiza.clientescuentas.infrastructure.adapter.in.rest.constants.ApiRoutes.PV_DNI;
-
 @RestController
 @RequestMapping(ApiRoutes.CLIENTES)
+@RequiredArgsConstructor
 @Tag(name = OpenApiDescriptions.TAG_CLIENTES, description = OpenApiDescriptions.TAG_CLIENTES_DESC)
 public class ClienteController {
 
+    private final ClienteUseCase clienteUseCase;
+    private final CuentaBancariaUseCase cuentaBancariaUseCase;
+
     @GetMapping
     @Operation(
-            summary = OpenApiDescriptions.OP_OBTENER_TODOS,
-            description = OpenApiDescriptions.OP_OBTENER_TODOS_DESC
+            summary = OpenApiDescriptions.OP_FIND_ALL,
+            description = OpenApiDescriptions.OP_FIND_ALL_DESC
     )
-    @ApiResponse(responseCode = HttpStatusCodes.OK, description = OpenApiDescriptions.RESP_200_LISTA_CLIENTES)
+    @ApiResponse(responseCode = HttpStatusCodes.OK, description = OpenApiDescriptions.RESP_200_CLIENTE_LIST)
     public ResponseEntity<List<ClienteResponse>> findAll() {
-        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+        List<ClienteResponse> response = clienteUseCase.findAll().stream()
+                .map(this::toResponse)
+                .toList();
+        return ResponseEntity.ok(response);
     }
 
-    @GetMapping(ApiRoutes.MAYORES_DE_EDAD)
+    @GetMapping(ApiRoutes.ADULTS)
     @Operation(
-            summary = OpenApiDescriptions.OP_OBTENER_MAYORES_EDAD,
-            description = OpenApiDescriptions.OP_OBTENER_MAYORES_EDAD_DESC
+            summary = OpenApiDescriptions.OP_FIND_ADULTS,
+            description = OpenApiDescriptions.OP_FIND_ADULTS_DESC
     )
-    @ApiResponse(responseCode = HttpStatusCodes.OK, description = OpenApiDescriptions.RESP_200_LISTA_CLIENTES)
+    @ApiResponse(responseCode = HttpStatusCodes.OK, description = OpenApiDescriptions.RESP_200_CLIENTE_LIST)
     public ResponseEntity<List<ClienteResponse>> findAdults() {
-        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+        List<ClienteResponse> response = clienteUseCase.findAdults().stream()
+                .map(this::toResponse)
+                .toList();
+        return ResponseEntity.ok(response);
     }
 
-    @GetMapping(ApiRoutes.CON_CUENTA_SUPERIOR_A)
+    @GetMapping(ApiRoutes.WITH_TOTAL_GREATER_THAN)
     @Operation(
-            summary = OpenApiDescriptions.OP_OBTENER_CON_SALDO_SUPERIOR,
-            description = OpenApiDescriptions.OP_OBTENER_CON_SALDO_SUPERIOR_DESC
+            summary = OpenApiDescriptions.OP_FIND_WITH_TOTAL_GREATER_THAN,
+            description = OpenApiDescriptions.OP_FIND_WITH_TOTAL_GREATER_THAN_DESC
     )
-    @ApiResponse(responseCode = HttpStatusCodes.OK, description = OpenApiDescriptions.RESP_200_LISTA_CLIENTES)
+    @ApiResponse(responseCode = HttpStatusCodes.OK, description = OpenApiDescriptions.RESP_200_CLIENTE_LIST)
     public ResponseEntity<List<ClienteResponse>> findWithTotalGreaterThan(
-            @Parameter(description = OpenApiDescriptions.PARAM_CANTIDAD, example = OpenApiExamples.CANTIDAD)
-            @PathVariable(PV_CANTIDAD) Double amount
+            @Parameter(description = OpenApiDescriptions.PARAM_AMOUNT, example = OpenApiExamples.AMOUNT)
+            @PathVariable(ApiRoutes.PV_AMOUNT) Double amount
     ) {
-        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+        List<ClienteResponse> response = clienteUseCase.findWithTotalGreaterThan(amount).stream()
+                .map(this::toResponse)
+                .toList();
+        return ResponseEntity.ok(response);
     }
 
-    @GetMapping(ApiRoutes.POR_DNI)
+    @GetMapping(ApiRoutes.BY_DNI)
     @Operation(
-            summary = OpenApiDescriptions.OP_OBTENER_POR_DNI,
-            description = OpenApiDescriptions.OP_OBTENER_POR_DNI_DESC
+            summary = OpenApiDescriptions.OP_FIND_BY_DNI,
+            description = OpenApiDescriptions.OP_FIND_BY_DNI_DESC
     )
     @ApiResponse(responseCode = HttpStatusCodes.OK, description = OpenApiDescriptions.RESP_200_CLIENTE)
-    @ApiResponse(responseCode = HttpStatusCodes.NOT_FOUND, description = OpenApiDescriptions.RESP_404_CLIENTE_NO_ENCONTRADO)
+    @ApiResponse(responseCode = HttpStatusCodes.NOT_FOUND, description = OpenApiDescriptions.RESP_404_CLIENTE_NOT_FOUND)
     public ResponseEntity<ClienteResponse> findByDni(
             @Parameter(description = OpenApiDescriptions.PARAM_DNI, example = OpenApiExamples.DNI)
-            @PathVariable(PV_DNI) String dni
+            @PathVariable(ApiRoutes.PV_DNI) String dni
     ) {
-        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+        Cliente cliente = clienteUseCase.findByDni(dni)
+                .orElseThrow(() -> new ClienteNotFoundException(dni));
+        return ResponseEntity.ok(toResponse(cliente));
+    }
+
+    private ClienteResponse toResponse(Cliente cliente) {
+        List<CuentaBancaria> cuentas = cuentaBancariaUseCase.findByDniCliente(cliente.getDni());
+        return ClienteResponse.from(cliente, cuentas);
     }
 }

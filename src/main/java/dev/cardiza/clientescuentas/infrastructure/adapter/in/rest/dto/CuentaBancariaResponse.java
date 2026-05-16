@@ -1,22 +1,32 @@
 package dev.cardiza.clientescuentas.infrastructure.adapter.in.rest.dto;
 
+import dev.cardiza.clientescuentas.domain.model.CuentaBancaria;
 import dev.cardiza.clientescuentas.infrastructure.adapter.in.rest.constants.OpenApiDescriptions;
 import dev.cardiza.clientescuentas.infrastructure.adapter.in.rest.constants.OpenApiExamples;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-@Schema(description = OpenApiDescriptions.CUENTA_BANCARIA_RESPONSE)
+@Schema(description = OpenApiDescriptions.CUENTA_RESPONSE)
 public record CuentaBancariaResponse(
 
-        @Schema(description = OpenApiDescriptions.ID_CUENTA_BANCARIA, example = OpenApiExamples.ID_CUENTA)
+        @Schema(description = OpenApiDescriptions.CUENTA_ID, example = OpenApiExamples.CUENTA_ID)
         Long id,
 
-        @Schema(description = OpenApiDescriptions.DNI_CLIENTE, example = OpenApiExamples.DNI)
+        @Schema(description = OpenApiDescriptions.CLIENTE_DNI, example = OpenApiExamples.DNI)
         String dniCliente,
 
-        @Schema(description = OpenApiDescriptions.TIPO_CUENTA_BANCARIA, example = OpenApiExamples.TIPO_CUENTA_PREMIUM)
+        @Schema(description = OpenApiDescriptions.CUENTA_TYPE, example = OpenApiExamples.CUENTA_TYPE_PREMIUM)
         String tipoCuenta,
 
         @Schema(description = OpenApiDescriptions.TOTAL, example = OpenApiExamples.TOTAL_PREMIUM)
         Double total
 ) {
+
+        public static CuentaBancariaResponse from(CuentaBancaria cuenta) {
+                return new CuentaBancariaResponse(
+                        cuenta.getId(),
+                        cuenta.getDniCliente(),
+                        cuenta.getTipoCuenta(),
+                        cuenta.getTotal()
+                );
+        }
 }

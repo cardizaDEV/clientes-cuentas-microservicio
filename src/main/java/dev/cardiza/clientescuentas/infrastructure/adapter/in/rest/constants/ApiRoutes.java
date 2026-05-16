@@ -9,13 +9,12 @@ public final class ApiRoutes {
     public static final String CLIENTES = "/clientes";
     public static final String CUENTAS = "/cuentas";
 
-    public static final String MAYORES_DE_EDAD = "/mayores-de-edad";
-    public static final String CON_CUENTA_SUPERIOR_A = "/con-cuenta-superior-a/{cantidad}";
-    public static final String POR_DNI = "/{dni}";
-
-    public static final String POR_ID_CUENTA = "/{idCuenta}";
+    public static final String ADULTS = "/mayores-de-edad";
+    public static final String WITH_TOTAL_GREATER_THAN = "/con-cuenta-superior-a/{cantidad}";
+    public static final String BY_DNI = "/{dni}";
+    public static final String BY_CUENTA_ID = "/{idCuenta}";
 
     public static final String PV_DNI = "dni";
-    public static final String PV_CANTIDAD = "cantidad";
-    public static final String PV_ID_CUENTA = "idCuenta";
+    public static final String PV_AMOUNT = "cantidad";
+    public static final String PV_CUENTA_ID = "idCuenta";
 }

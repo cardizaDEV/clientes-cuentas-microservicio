@@ -7,12 +7,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 
-@Schema(description = OpenApiDescriptions.ACTUALIZAR_SALDO_REQUEST)
+@Schema(description = OpenApiDescriptions.UPDATE_BALANCE_REQUEST)
 public record ActualizarSaldoRequest(
 
-        @Schema(description = OpenApiDescriptions.TOTAL_NUEVO, example = OpenApiExamples.TOTAL_ACTUALIZADO)
-        @NotNull(message = ValidationMessages.TOTAL_OBLIGATORIO)
-        @PositiveOrZero(message = ValidationMessages.TOTAL_NO_NEGATIVO)
+        @Schema(description = OpenApiDescriptions.NEW_TOTAL, example = OpenApiExamples.UPDATED_TOTAL)
+        @NotNull(message = ValidationMessages.TOTAL_REQUIRED)
+        @PositiveOrZero(message = ValidationMessages.TOTAL_NOT_NEGATIVE)
         Double total
 ) {
 }

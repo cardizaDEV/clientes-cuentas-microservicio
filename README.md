@@ -21,18 +21,23 @@ En un proyecto con más entidades y mapeos complejos sí compensaría.
 
 El código se ciñe a lo solicitado. En un proyecto real plantearía las siguientes mejoras:
 
-- **`tipoCuenta` como enum.** El enunciado lo define como String, pero los valores son un conjunto cerrado
+- **`tipoCuenta` como `enum`.** El enunciado lo define como `String`, pero los valores son un conjunto cerrado
 (PREMIUM, NORMAL, JUNIOR).
 
 
-- **`total` como `BigDecimal`.** El enunciado especifica Double, pero no es lo más correcto al trabajar con dinero.
+- **`total` como `BigDecimal`.** El enunciado especifica `Double`, pero no es lo más correcto al trabajar con dinero.
 
 
 - **`Cliente` agrega sus cuentas.** Aunque el enunciado define las dos entidades por separado, todos los endpoints
-  devuelven cliente con sus cuentas. Definir `Cliente` con `List<CuentaBancaria>` simplificaría mucho la lógica
-  de negocio.
+  devuelven cliente con sus cuentas. Definir `Cliente` con `List<CuentaBancaria>` sería más sencillo.
 
 
-- **Código en inglés con mensajes en español.** Por seguir lo solicitado, todo el código (modelos, DTOs...) está 
-  en español. En un proyecto real mantendría el código en inglés y dejaría el español solo para los mensajes que ve 
-  el usuario final.
+- **Código en inglés con mensajes en español.** Por seguir lo solicitado, todo el código (nombres de: modelos, DTOs...) 
+  está parcialmente en español. En un proyecto real mantendría el código en inglés y dejaría el español solo para los 
+  mensajes que ve el usuario final.
+
+
+- **`Cuenta bancaria` crea `Cliente`.** Al crear una cuenta, si el `Cliente` no existe se crea uno unicamente con el 
+  dato de `dni`, creo que lo mas correcto sería devolver un mensaje de que no existe ese cliente, y tener un endpoint 
+  para poder crearlo al completo, teniendo todos los datos y delegando la lógica de su creación al propio servicio 
+  de `Cliente`.

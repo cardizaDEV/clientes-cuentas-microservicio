@@ -7,8 +7,6 @@ import java.util.Optional;
 
 public interface CuentaBancariaRepositoryPort {
 
-    List<CuentaBancaria> findAll();
-
     List<CuentaBancaria> findByDniCliente(String dniCliente);
 
     Optional<CuentaBancaria> findById(Long id);
