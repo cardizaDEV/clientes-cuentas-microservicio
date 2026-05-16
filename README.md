@@ -68,12 +68,16 @@ En un proyecto con más entidades y mapeos complejos sí compensaría.
 
 - **Total negativo.** Permito que una cuenta tenga un saldo negativo por posibles descubiertos.
 
+
+- **Validación con patrones.** El dni debe seguir el patron `[0-9]{8}[A-Z]` y las cuentas deben ser de tipo
+  `JUNIOR`, `NORMAL` o `PREMIUM`.
+
 ## Consideraciones
 
 El código se ciñe a lo solicitado. En un proyecto real plantearía las siguientes mejoras:
 
-- **`tipoCuenta` como `enum`.** El enunciado lo define como `String`, pero los valores son un conjunto cerrado
-(PREMIUM, NORMAL, JUNIOR).
+- **`tipoCuenta` como `enum`.** El enunciado lo define como `String` y actualmente se valida con `@Pattern` por ese motivo,
+ pero sería mejor definirlo directamente como `enum`.
 
 
 - **`total` como `BigDecimal`.** El enunciado especifica `Double`, pero no es lo más correcto al trabajar con dinero.
