@@ -7,17 +7,15 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 
-import static dev.cardiza.clientescuentas.infrastructure.adapter.in.rest.constants.ValidationValues.DNI_LENGTH;
-import static dev.cardiza.clientescuentas.infrastructure.adapter.in.rest.constants.ValidationValues.TIPO_PATTERN;
+import static dev.cardiza.clientescuentas.infrastructure.adapter.in.rest.constants.ValidationValues.*;
 
 @Schema(description = OpenApiDescriptions.CREATE_CUENTA_REQUEST)
 public record CrearCuentaBancariaRequest(
 
         @Schema(description = OpenApiDescriptions.CLIENTE_DNI, example = OpenApiExamples.DNI)
         @NotBlank(message = ValidationMessages.CLIENTE_DNI_REQUIRED)
-        @Size(min = DNI_LENGTH, max = DNI_LENGTH, message = ValidationMessages.CLIENTE_DNI_SIZE)
+        @Pattern(regexp = DNI_PATTERN, message = ValidationMessages.CLIENTE_DNI_INVALID)
         String dniCliente,
 
         @Schema(description = OpenApiDescriptions.CUENTA_TYPE, example = OpenApiExamples.CUENTA_TYPE_NORMAL)

@@ -99,7 +99,7 @@ class CuentaBancariaControllerTest {
     void create_400_dniInvalid() throws Exception {
         mockMvc.perform(post(ApiRoutes.CUENTAS)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"dniCliente\": 1111, \"tipoCuenta\": \"NORMAL\", \"total\": 50000.0}"))
+                        .content("{\"dniCliente\": \"INVALIDO\", \"tipoCuenta\": \"NORMAL\", \"total\": 50000.0}"))
                 .andExpect(status().isBadRequest());
     }
 
