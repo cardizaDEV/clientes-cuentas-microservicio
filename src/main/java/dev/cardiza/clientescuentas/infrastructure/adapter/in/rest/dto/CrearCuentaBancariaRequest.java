@@ -6,9 +6,11 @@ import dev.cardiza.clientescuentas.infrastructure.adapter.in.rest.constants.Vali
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 import static dev.cardiza.clientescuentas.infrastructure.adapter.in.rest.constants.ValidationValues.DNI_LENGTH;
+import static dev.cardiza.clientescuentas.infrastructure.adapter.in.rest.constants.ValidationValues.TIPO_PATTERN;
 
 @Schema(description = OpenApiDescriptions.CREATE_CUENTA_REQUEST)
 public record CrearCuentaBancariaRequest(
@@ -20,6 +22,7 @@ public record CrearCuentaBancariaRequest(
 
         @Schema(description = OpenApiDescriptions.CUENTA_TYPE, example = OpenApiExamples.CUENTA_TYPE_NORMAL)
         @NotBlank(message = ValidationMessages.ACCOUNT_TYPE_REQUIRED)
+        @Pattern(regexp = TIPO_PATTERN, message = ValidationMessages.ACCOUNT_TYPE_INVALID)
         String tipoCuenta,
 
         @Schema(description = OpenApiDescriptions.INITIAL_TOTAL, example = OpenApiExamples.TOTAL_NORMAL)

@@ -104,6 +104,14 @@ class CuentaBancariaControllerTest {
     }
 
     @Test
+    void create_400_tipoCuentaInvalid() throws Exception {
+        mockMvc.perform(post(ApiRoutes.CUENTAS)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"dniCliente\": \"11111111A\", \"tipoCuenta\": \"INVALIDO\", \"total\": 50000.0}"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     void updateTotal_200() throws Exception {
         CuentaBancaria cuenta = new CuentaBancaria(1L, "11111111A", "NORMAL", 50000.0);
         when(cuentaBancariaUseCase.updateTotal(1L, 50000.0)).thenReturn(cuenta);

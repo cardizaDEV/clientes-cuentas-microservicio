@@ -7,4 +7,5 @@ import lombok.NoArgsConstructor;
 public final class ValidationValues {
 
     public static final int DNI_LENGTH = 9;
+    public static final String TIPO_PATTERN = "JUNIOR|NORMAL|PREMIUM";
 }
