@@ -28,7 +28,21 @@ class CuentaBancariaControllerTest {
     private CuentaBancariaUseCase cuentaBancariaUseCase;
 
     @Test
-    void create_201() throws Exception {
+    void create_201_New() throws Exception {
+        CuentaBancaria cuenta = new CuentaBancaria(1L, "11111222A", "NORMAL", 50000.0);
+        when(cuentaBancariaUseCase.create("11111222A", "NORMAL", 50000.0)).thenReturn(cuenta);
+
+        mockMvc.perform(post(ApiRoutes.CUENTAS)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"dniCliente\": \"11111222A\", \"tipoCuenta\": \"NORMAL\", \"total\": 50000.0}"))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.dniCliente").value("11111222A"))
+                .andExpect(jsonPath("$.tipoCuenta").value("NORMAL"))
+                .andExpect(jsonPath("$.total").value("50000.0"));
+    }
+
+    @Test
+    void create_201_Existent() throws Exception {
         CuentaBancaria cuenta = new CuentaBancaria(1L, "11111111A", "NORMAL", 50000.0);
         when(cuentaBancariaUseCase.create("11111111A", "NORMAL", 50000.0)).thenReturn(cuenta);
 
@@ -78,6 +92,14 @@ class CuentaBancariaControllerTest {
         mockMvc.perform(post(ApiRoutes.CUENTAS)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"dniCliente\": \"11111111A\", \"tipoCuenta\": \"NORMAL\", \"total\": null}"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void create_400_dniInvalid() throws Exception {
+        mockMvc.perform(post(ApiRoutes.CUENTAS)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"dniCliente\": 1111, \"tipoCuenta\": \"NORMAL\", \"total\": 50000.0}"))
                 .andExpect(status().isBadRequest());
     }
 

@@ -9,5 +9,5 @@ public final class ValidationMessages {
     public static final String CLIENTE_DNI_REQUIRED = "El DNI del cliente es obligatorio";
     public static final String ACCOUNT_TYPE_REQUIRED = "El tipo de cuenta es obligatorio";
     public static final String TOTAL_REQUIRED = "El total es obligatorio";
-    public static final String TOTAL_NOT_NEGATIVE = "El total no puede ser negativo";
+    public static final String CLIENTE_DNI_SIZE = "El DNI debe tener exactamente 9 caracteres";
 }

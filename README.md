@@ -65,6 +65,9 @@ en esta prueba. 17 sigue siendo LTS y cubre todo lo necesario.
 - **Sin dependencias de mapeo.** Descarto MapStruct porque para los mapeos de esta prueba los records son suficiente.
 En un proyecto con más entidades y mapeos complejos sí compensaría.
 
+
+- **Total negativo.** Permito que una cuenta tenga un saldo negativo por posibles descubiertos.
+
 ## Consideraciones
 
 El código se ciñe a lo solicitado. En un proyecto real plantearía las siguientes mejoras:
