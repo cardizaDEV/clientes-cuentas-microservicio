@@ -76,8 +76,8 @@ En un proyecto con más entidades y mapeos complejos sí compensaría.
 
 El código se ciñe a lo solicitado. En un proyecto real plantearía las siguientes mejoras:
 
-- **`tipoCuenta` como `enum`.** El enunciado lo define como `String` y actualmente se valida con `@Pattern` por ese motivo,
- pero sería mejor definirlo directamente como `enum`.
+- **`tipoCuenta` como `enum`.** El enunciado lo define como `String` y actualmente se valida con `@Pattern` pero al ser 
+  un conjunto cerrado sería mejor definirlo directamente como `enum`.
 
 
 - **`total` como `BigDecimal`.** El enunciado especifica `Double`, pero no es lo más correcto al trabajar con dinero.
