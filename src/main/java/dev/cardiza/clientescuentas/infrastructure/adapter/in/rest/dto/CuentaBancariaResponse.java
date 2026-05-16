@@ -21,12 +21,12 @@ public record CuentaBancariaResponse(
         Double total
 ) {
 
-        public static CuentaBancariaResponse from(CuentaBancaria cuenta) {
-                return new CuentaBancariaResponse(
-                        cuenta.getId(),
-                        cuenta.getDniCliente(),
-                        cuenta.getTipoCuenta(),
-                        cuenta.getTotal()
-                );
-        }
+    public static CuentaBancariaResponse from(CuentaBancaria cuenta) {
+        return new CuentaBancariaResponse(
+                cuenta.getId(),
+                cuenta.getDniCliente(),
+                cuenta.getTipoCuenta(),
+                cuenta.getTotal()
+        );
+    }
 }
